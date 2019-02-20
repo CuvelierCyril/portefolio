@@ -1,0 +1,17 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Message{% if message is defined %}{% if message is not null %} {{ message.id }}{% endif %}{% endif %}{% endblock %}
+
+{% block body %}
+    {% if message is defined %}
+        {% if message is not null %}
+            {{ message.content }}
+        {% endif %}
+        <select name="" id="">
+            <option {% if message.statut == 0 %} selected {% endif %}value="0">Non lu</option>
+            <option {% if message.statut == 1 %} selected {% endif %}value="1">Lu</option>
+            <option {% if message.statut == 2 %} selected {% endif %}value="2">A répondre</option>
+            <option {% if message.statut == 3 %} selected {% endif %}value="3">Répondu</option>
+        </select>
+    {% endif %}
+{% endblock %}

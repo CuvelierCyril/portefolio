@@ -1,0 +1,49 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<form action="{{ path('apiLogin') }}" method="POST">
+    <input type="text" name="email">
+    <input type="text" name="password">
+    <input type="submit">
+</form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $('form').submit(function(e){
+            e.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                dataType: 'json',
+                timeout: 4000,
+                data: form.serialize(),
+                success:function(data){
+                    if (data.redirect){
+                        document.location.href = "{{ path('admin-dashboard') }}";
+                    }
+                    if (data.email){
+
+                    }
+                    if (data.password){
+
+                    }
+                },
+                error:function(){
+
+                },
+                beforeSend:function(){
+
+                },
+                complete:function(){
+
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

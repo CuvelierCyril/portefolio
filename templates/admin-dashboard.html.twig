@@ -1,0 +1,37 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    {% if messages is defined %}
+        {% if messages is not empty %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Statut</th>
+                        <th scope="col">Auteur</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Contenu</th>
+                        <th scope="col">Lien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in messages %}
+                        <tr class="{% if message.statut == 0 %}table-secondary{% elseif message.statut == 1 %}table-primary{% elseif message.statut == 2 %}table-warning{% else %}table-success{% endif %}">
+                            <td scope="row">
+                                {% if message.statut == 0 %}Non lu{% elseif message.statut == 1 %}Lu{% elseif message.statut == 2 %}A répondre{% else %}Répondu{% endif %}
+                            </th>
+                            <td>{{ message.author }}</th>
+                            <td>{{ message.date|date('d-m-Y à H:i:s') }}</th>
+                            <td>{{ message.content|truncate }}</td>
+                            <td><a href="{{ path('admin-message', {nb : message.id}) }}">Voir le message</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>Pas de message aujourd'hui</p>
+            {% endif %}
+        <a href="{{ path('admin-messages') }}">Tous les messages</a>
+    {% endif %}
+{% endblock %}

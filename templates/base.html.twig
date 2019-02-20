@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %} - Cyril Cuvelier</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <div class="container-fluid">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.get('_route') == 'index' %} active{% endif %}" href="{{ path('index') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.get('_route') == 'skills' %} active{% endif %}" href="{{ path('skills') }}">Mes compétences</a>
+                </li>
+                <li class="nav-item">Logo à voir</li>
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.get('_route') == 'experience' %} active{% endif %}" href="{{ path('experience') }}">Mon expérience</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.get('_route') == 'contact' %} active{% endif %}" href="{{ path('contact') }}">Me contacter</a>
+                </li>
+            </ul>
+            {% block body %}{% endblock %}
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

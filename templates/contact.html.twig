@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Me contacter{% endblock %}
+
+{% block body %}
+<form action="{{ path('apiMessage') }}" method="POST">
+    <input type="text" name="email">
+    <input type="text" name="content">
+    <input type="submit">
+</form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $('form').submit(function(e){
+            e.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                dataType: 'json',
+                timeout: 4000,
+                data: form.serialize(),
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(){
+
+                },
+                beforeSend:function(){
+
+                },
+                complete:function(){
+
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
