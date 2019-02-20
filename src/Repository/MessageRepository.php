@@ -39,6 +39,17 @@ class MessageRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findLastByIpadress($ip){
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.ipadress = :val')
+            ->setParameter('val', $ip)
+            ->orderBy('m.date', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

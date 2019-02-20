@@ -3,39 +3,110 @@
 {% block title %}Me contacter{% endblock %}
 
 {% block body %}
-<form action="{{ path('apiMessage') }}" method="POST">
-    <input type="text" name="email">
-    <input type="text" name="content">
-    <input type="submit">
-</form>
+    <h1 class="col-lg-12 text-center mb-5 mt-3">Me contacter</h1>
+    <div class="col-lg-8 m-auto">
+        <p class="mb-5">Vous souhaitez me contacter blabla Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, vel doloremque. Ipsum enim optio molestiae, quidem veniam voluptatem placeat deleniti cumque eos facere facilis dolore praesentium! Excepturi consequatur hic eligendi perferendis voluptate in perspiciatis ipsam voluptas quis aut quibusdam aliquam exercitationem explicabo eius at, dolorem nihil alias ex iure accusamus.</p>
+        {% if delay is defined %}
+        <p class="alert alert-warning col-lg-11 offset-lg-1">Vous ne pouvez envoyer un message que toutes les 6 heures. Temps restant : <span id="timer-display"></span></p>
+        {% endif %}
+        <form action="{{ path('apiMessage') }}" method="POST" class="col-lg-11 offset-lg-1">
+            <div class="form-group col-lg-6">
+                <label for="email">Votre adresse mail de contacte :</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="email@exemple.com">
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="content">Veuillez écrire votre message ici :</label>
+                <textarea class="form-control" id="content" name="content" rows="5" placeholder="Une remarque, une question, une proposition professionnelle..."></textarea>
+            </div>
+            <div class="row col-lg-12" id="submit-group">
+                <input type="submit" class="btn btn-primary col-lg-3" value="Envoyer"{% if delay is defined %} disabled{% endif %}>
+            </div>
+        </form>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
 <script>
     $(document).ready(function(){
+        var timestamp = "{{ delay }}";
+        console.log(timestamp);
+        var timer = setInterval(myTimer, 1000);
+        var enabled = true;
         $('form').submit(function(e){
             e.preventDefault();
             var form = $(this);
-            $.ajax({
-                url: form.attr('action'),
-                method: form.attr('method'),
-                dataType: 'json',
-                timeout: 4000,
-                data: form.serialize(),
-                success:function(data){
-                    console.log(data);
-                },
-                error:function(){
+            if (enabled){
+                $('#servor-error').remove();
+                $('#delay-error').remove();
+                $.ajax({
+                    url: form.attr('action'),
+                    method: form.attr('method'),
+                    dataType: 'json',
+                    timeout: 4000,
+                    data: form.serialize(),
+                    success:function(data){
+                        console.log(data);
+                        if (data.success){
+                            form.remove();
+                            $('<p class="alert alert-success">Votre message a été envoyé avec succes.<p>').insertAfter($('p'));
+                        } else {
+                            if (typeof data.email !== 'undefined' && data.email){
+                                $('#email').css('border', '2px solid red');
+                            } else {
+                                $('#email').css('border', '2px solid green');
+                            }
+                            if (typeof data.content !== 'undefined' && data.content){
+                                $('#content').css('border', '2px solid red');
+                            } else {
+                                $('#content').css('border', '2px solid green');
+                            }
+                            if (typeof data.delay !== 'undefined' && data.delay){
+                                $('#submit-group').append('<p class="col-lg-8 offset-lg-1 alert alert-warning mb-0" id="delay-error">Vous ne pouvez envoyer un message que toutes les 6 heures.</p>');
+                            } else {
+                                $('#delay-error').remove();
+                            }
+                        }
+                    },
+                    error:function(){
+                        $('#submit-group').append('<p class="col-lg-8 offset-lg-1 alert alert-warning mb-0" id="servor-error">Erreur liée au serveur, veuillez réessayer ultérieuement</p>');
+                    },
+                    beforeSend:function(){
+                        setLoader();
+                        enabled = false;
+                    },
+                    complete:function(){
+                        removeLoader();
+                        enabled = true;
+                    }
+                });
+            }
 
-                },
-                beforeSend:function(){
+            function setLoader(){
+                $('#submit-group').append('<div id="loader" class="lds-svg ng-scope"><svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling"><circle cx="50" cy="50" fill="none" stroke="#c5523f" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" transform="rotate(185.33 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg></div>');
+            }
 
-                },
-                complete:function(){
-
-                }
-            });
+            function removeLoader(){
+                $('#loader').remove();
+            }
         });
+        function myTimer() {
+            var h = Math.floor(timestamp / 3600);
+            var min = Math.floor((timestamp - (h * 3600)) / 60);
+            var sec = Math.floor((timestamp - (h * 3600)) - (min * 60));
+            if (h < 10 ){
+                h = '0'+h;
+            }
+            if (min < 10 ){
+                min = '0'+min;
+            }
+            if (sec < 10 ){
+                sec = '0'+sec;
+            }
+            $('#timer-display').text(h+':'+min+':'+sec);
+            if (timestamp > 0){
+                timestamp = timestamp - 1;
+            }
+        }
     });
 </script>
 {% endblock %}

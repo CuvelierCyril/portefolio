@@ -4,11 +4,20 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %} - Cyril Cuvelier</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <style>
+            h1{
+                text-decoration: underline;
+            }
+            #loader{
+                width: 40px;
+                height: 40px;
+            }
+        </style>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         <div class="container-fluid">
-            <ul class="nav justify-content-center">
+            <ul class="nav justify-content-center border-bottom bg-light">
                 <li class="nav-item">
                     <a class="nav-link{% if app.request.get('_route') == 'index' %} active{% endif %}" href="{{ path('index') }}">Accueil</a>
                 </li>

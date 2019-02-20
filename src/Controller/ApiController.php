@@ -42,14 +42,29 @@ class ApiController extends AbstractController{
         $email = $request->request->get('email');
         $content = $request->request->get('content');
         $date = new DateTime;
-        $ip = 'xxx.xxx.xxx.xxx';
+        $ip = $request->server->get('REMOTE_ADDR');
 
-        $message = new Message();
-        $message->setAuthor($email)->setContent($content)->setDate($date)->setIpadress($ip)->setStatut(0);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($message);
-        $em->flush();
-        $msg['success'] = true;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $msg['email'] = true;
+        }
+
+        if(!preg_match('#^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s !?,]{10,5000}$#', $content)){
+            $msg['content'] = true;
+        }
+        if (!isset($msg)){
+            $repo = $this->getDoctrine()->getRepository(Message::class);
+            $lastMessage = $repo->findLastByIpadress($ip);
+            if ($lastMessage->getDate()->getTimestamp() + 21600 > time()){
+                $msg['delay'] = true;
+            } else {
+                $message = new Message();
+                $message->setAuthor($email)->setContent($content)->setDate($date)->setIpadress($ip)->setStatut(0);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($message);
+                $em->flush();
+                $msg['success'] = true;
+            }
+        }
         return $this->json($msg);
     }
 }

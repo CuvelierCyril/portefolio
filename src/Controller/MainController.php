@@ -37,7 +37,15 @@ class MainController extends AbstractController{
     /**
      * @route("/me-contacter/", name="contact")
      */
-    public function contact(){
+    public function contact(Request $request){
+        $ip = $request->server->get('REMOTE_ADDR');
+
+        $repo = $this->getDoctrine()->getRepository(Message::class);
+        $lastMessage = $repo->findLastByIpadress($ip);
+        if ($lastMessage->getDate()->getTimestamp() + 21600 > time()){
+            return $this->render('contact.html.twig', array('delay' => $lastMessage->getDate()->getTimestamp() + 21600 - time()));
+        }
+
         return $this->render('contact.html.twig');
     }
 
