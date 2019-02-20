@@ -26,11 +26,34 @@
 {% endblock %}
 
 {% block javascripts %}
+{% if delay is defined %}
 <script>
     $(document).ready(function(){
         var timestamp = "{{ delay }}";
-        console.log(timestamp);
         var timer = setInterval(myTimer, 1000);
+        function myTimer() {
+            var h = Math.floor(timestamp / 3600);
+            var min = Math.floor((timestamp - (h * 3600)) / 60);
+            var sec = Math.floor((timestamp - (h * 3600)) - (min * 60));
+            if (h < 10 ){
+                h = '0'+h;
+            }
+            if (min < 10 ){
+                min = '0'+min;
+            }
+            if (sec < 10 ){
+                sec = '0'+sec;
+            }
+            $('#timer-display').text(h+':'+min+':'+sec);
+            if (timestamp > 0){
+                timestamp = timestamp - 1;
+            }
+        }
+    });
+</script>
+{% endif %}
+<script>
+    $(document).ready(function(){
         var enabled = true;
         $('form').submit(function(e){
             e.preventDefault();
@@ -89,24 +112,6 @@
                 $('#loader').remove();
             }
         });
-        function myTimer() {
-            var h = Math.floor(timestamp / 3600);
-            var min = Math.floor((timestamp - (h * 3600)) / 60);
-            var sec = Math.floor((timestamp - (h * 3600)) - (min * 60));
-            if (h < 10 ){
-                h = '0'+h;
-            }
-            if (min < 10 ){
-                min = '0'+min;
-            }
-            if (sec < 10 ){
-                sec = '0'+sec;
-            }
-            $('#timer-display').text(h+':'+min+':'+sec);
-            if (timestamp > 0){
-                timestamp = timestamp - 1;
-            }
-        }
     });
 </script>
 {% endblock %}
