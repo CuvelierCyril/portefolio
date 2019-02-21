@@ -12,14 +12,28 @@
         <form action="{{ path('apiMessage') }}" method="POST" class="col-lg-11 offset-lg-1">
             <div class="form-group col-lg-6">
                 <label for="email">Votre adresse mail de contacte :</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="email@exemple.com">
+                <span class="d-inline-block" data-toggle="popover" data-placement="right" title="Email accepté : " data-content="Le format de votre adresse mail doit être conforme, comme dans l'exemple ci-dessous.">
+                    <button type="button" class="btn btn-secondary" style="pointer-events: none;" disabled>?</button>
+                </span>
+                <input type="email" id="email" name="email" class="form-control mt-2" placeholder="exemple@email.com">
             </div>
             <div class="form-group col-lg-12">
                 <label for="content">Veuillez écrire votre message ici :</label>
-                <textarea class="form-control" id="content" name="content" rows="5" placeholder="Une remarque, une question, une proposition professionnelle..."></textarea>
+                <span class="d-inline-block" data-toggle="popover" data-placement="right" title="Contenu accepté : " data-content="Les caractères acceptés sont les lettres minuscules et majuscules, les chiffres de 0 à 9, les charactères accentués et les signes de ponctuation suivants ! ? . : , '">
+                    <button type="button" class="btn btn-secondary" style="pointer-events: none;" disabled>?</button>
+                </span>
+                <textarea class="form-control mt-2" id="content" name="content" rows="5" placeholder="Une remarque, une question, une proposition professionnelle..."></textarea>
             </div>
             <div class="row col-lg-12" id="submit-group">
-                <input type="submit" class="btn btn-primary col-lg-3" value="Envoyer"{% if delay is defined %} disabled{% endif %}>
+                {% if delay is defined %}
+                <span class="d-inline-block col-lg-3" data-toggle="popover" data-placement="right" data-content="Veuillez attendre la fin du décompte.">
+                    <button type="button" class="btn btn-primary col-lg-12" style="pointer-events: none;" disabled>Envoyer</button>
+                </span>
+                {% else %}
+                <span class="col-lg-3">
+                    <input type="submit" class="btn btn-primary col-lg-12" value="Envoyer">
+                </span>
+                {% endif %}
             </div>
         </form>
     </div>
@@ -54,6 +68,9 @@
 {% endif %}
 <script>
     $(document).ready(function(){
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        });
         var enabled = true;
         $('form').submit(function(e){
             e.preventDefault();

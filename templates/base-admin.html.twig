@@ -13,7 +13,7 @@
                     <a class="nav-link{% if app.request.get('_route') == 'admin-dashboard' %} active{% endif %}" href="{{ path('admin-dashboard') }}">Tableu de bord</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if app.request.get('_route') == 'admin-messages' %} active{% endif %}" href="{{ path('admin-messages') }}">Messages</a>
+                    <a class="nav-link{% if app.request.get('_route') == 'admin-messages' %} active{% endif %}" href="{{ path('admin-messages', {page : 1}) }}">Messages</a>
                 </li>
                 <li class="nav-item">Logo à voir</li>
                 <li class="nav-item">

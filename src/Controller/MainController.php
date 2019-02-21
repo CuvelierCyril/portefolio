@@ -72,15 +72,17 @@ class MainController extends AbstractController{
         return $this->render('admin-dashboard.html.twig', array('messages' => $todayMessages));
     }
     /**
-     * @route("/admin/messages", name="admin-messages")
+     * @route("/admin/messages/{page}", name="admin-messages")
      */
-    public function adminMessages(){
+    public function adminMessages(int $page){
         if (!$this->get('session')->has('account')){
             throw new AccessDeniedHttpException();
         }
+        $offset = ($page * 25) - 25;
         $repo = $this->getDoctrine()->getRepository(Message::class);
-        $messages = $repo->findByDate();
-        return $this->render('admin-messages.html.twig', array('messages' => $messages));
+        $messages = $repo->findByDate($offset);
+        $maxPage = ceil(count($repo->findAll()) / 25);
+        return $this->render('admin-messages.html.twig', array('messages' => $messages, 'currentPage' => $page, 'maxPage' => $maxPage));
     }
 
     /**

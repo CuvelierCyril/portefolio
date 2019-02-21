@@ -30,10 +30,11 @@ class MessageRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByDate(){
+    public function findByDate($offset){
         return $this->createQueryBuilder('m')
             ->orderBy('m.date', 'DESC')
             ->setMaxResults(25)
+            ->setFirstResult($offset)
             ->getQuery()
             ->getResult()
         ;

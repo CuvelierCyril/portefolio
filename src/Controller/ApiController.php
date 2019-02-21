@@ -48,7 +48,7 @@ class ApiController extends AbstractController{
             $msg['email'] = true;
         }
 
-        if(!preg_match('#^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s !?,]{10,5000}$#', $content)){
+        if(!preg_match('#^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-\s !?,:\"\']{10,5000}$#', $content)){
             $msg['content'] = true;
         }
         if (!isset($msg)){

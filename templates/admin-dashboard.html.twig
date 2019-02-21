@@ -29,9 +29,8 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% else %}
-                <p>Pas de message aujourd'hui</p>
-            {% endif %}
-        <a href="{{ path('admin-messages') }}">Tous les messages</a>
+        {% else %}
+            <p>Pas de message aujourd'hui</p>
+        {% endif %}
     {% endif %}
 {% endblock %}
