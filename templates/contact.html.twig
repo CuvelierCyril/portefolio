@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="col-lg-12 text-center mb-5 mt-3">Me contacter</h1>
     <div class="col-lg-8 m-auto">
-        <p class="mb-5">Vous souhaitez me contacter blabla Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, vel doloremque. Ipsum enim optio molestiae, quidem veniam voluptatem placeat deleniti cumque eos facere facilis dolore praesentium! Excepturi consequatur hic eligendi perferendis voluptate in perspiciatis ipsam voluptas quis aut quibusdam aliquam exercitationem explicabo eius at, dolorem nihil alias ex iure accusamus.</p>
+        <p class="mb-5">Si vous souhaitez me contacter alors vous êtes au bon endroit. Ce petit formulaire vous permettera de me laisser un message que je pourrais lire et au quel je pourrais répondre. C'est pourquoi il est important que vous donniez une adresse mail valide et utilisée, car c'est à l'adresse mail écrite ci-dessous que je réponderai si réponse il doit y avoir.<br>Attention ! Afin d'éviter le spam par des personnes mal intentionnées, l'envoi de message est limité à un envoi toutes les 6 heures.</p>
         {% if delay is defined %}
         <p class="alert alert-warning col-lg-11 offset-lg-1">Vous ne pouvez envoyer un message que toutes les 6 heures. Temps restant : <span id="timer-display"></span></p>
         {% endif %}
@@ -13,16 +13,16 @@
             <div class="form-group col-lg-6">
                 <label for="email">Votre adresse mail de contacte :</label>
                 <span class="d-inline-block" data-toggle="popover" data-placement="right" title="Email accepté : " data-content="Le format de votre adresse mail doit être conforme, comme dans l'exemple ci-dessous.">
-                    <button type="button" class="btn btn-secondary" style="pointer-events: none;" disabled>?</button>
+                    <span id="badge-email" style="pointer-events: none;" class="badge badge-secondary">?</span>
                 </span>
-                <input type="email" id="email" name="email" class="form-control mt-2" placeholder="exemple@email.com">
+                <input type="email" id="email" name="email" class="form-control" placeholder="exemple@email.com">
             </div>
             <div class="form-group col-lg-12">
                 <label for="content">Veuillez écrire votre message ici :</label>
-                <span class="d-inline-block" data-toggle="popover" data-placement="right" title="Contenu accepté : " data-content="Les caractères acceptés sont les lettres minuscules et majuscules, les chiffres de 0 à 9, les charactères accentués et les signes de ponctuation suivants ! ? . : , '">
-                    <button type="button" class="btn btn-secondary" style="pointer-events: none;" disabled>?</button>
+                <span class="d-inline-block" data-toggle="popover" data-placement="right" title="Contenu accepté : " data-content="Les caractères acceptés sont les lettres minuscules et majuscules, les chiffres de 0 à 9, les charactères accentués et les signes de ponctuation suivants ! ? . : , ' Le message doit comprendre entre 10 et 5000 caractères.">
+                    <span id="badge-content" style="pointer-events: none;" class="badge badge-secondary">?</span>
                 </span>
-                <textarea class="form-control mt-2" id="content" name="content" rows="5" placeholder="Une remarque, une question, une proposition professionnelle..."></textarea>
+                <textarea class="form-control" id="content" name="content" rows="5" placeholder="Une remarque, une question, une proposition professionnelle... C'est ici !"></textarea>
             </div>
             <div class="row col-lg-12" id="submit-group">
                 {% if delay is defined %}

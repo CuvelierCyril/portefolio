@@ -3,4 +3,123 @@
 {% block title %}Mon expérience{% endblock %}
 
 {% block body %}
+    <h1 class="col-lg-12 text-center mb-5 mt-3">Mon expérience</h1>
+    <div class="col-lg-8 m-auto">
+      <p class="mb-5">Et qu'en est-il de l'epxérience professionnelle? Voici ici présenté bièvement mes diverses expériences professionnelle. Pour plus de détail, je vous recommande de vous referencer à mon C.V. Si enfin il vous reste des interrogations, n'hésitez pas à utiliser la section 'me contacter' afin de me poser directement vos questions.</p>
+      <div class="accordion mb-5" id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button id="btnOne" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Expérience scolaire <i class="fas fa-caret-down"></i></button>
+            </h2>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <ul>
+                <li>Lycée
+                  <ul>
+                    <li>Baccalauréat Scientifique scpécialité physique-chimie.</li>
+                  </ul>
+                </li>
+                <li>Ecole d'ingénieur Epita
+                  <ul>
+                    <li>Première année en classe préparatoire intégré suite au concours publique.</li>
+                    <li>Cours d'algorithmie avancé, apprentissage du C#, programmation orienté objet.</li>
+                    <li>Projet de fin d'année : jeu vidéo par groupe de 3, avec un executable et un installer sur CD. Mode de jeu solo de plateforme en 3D, mode de "combat" multijoueur, le tout developpé en C# sous Unity.</li>
+                  </ul>
+                </li>
+                <li>Faculté d'informatique de Dijon
+                  <ul>
+                    <li>Première et seconde années d'informatique à la faculté de Dijon. </li>
+                    <li>Découverte du java, initiation très briève au Html et au Css, cours de programmation orienté objet et d'algorithmie, modélisation 3D.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button id="btnTwo" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">Formation professionnelle <i class="fas fa-caret-down"></i></button>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+              <ul>
+                <li>WebForce3
+                  <ul>
+                    <li>Formation en intégration et developpement Web d'une durée de 5 mois, avec stage de 2 semaines obligatoire.</li>
+                    <li>Langages appris : Html, Css, Js, Php, MySQL, Twig.</li>
+                    <li>Compléments appris : JQuery, Bootstrap, WordPress, Symfony.</li>
+                  </ul>
+                </li>
+                <li>Opquast
+                  <ul>
+                    <li>Obtention de la cértification Opquast avec le rang 'confirmé' et le score de 775/1000. Certificat valide jusqu'au 14 décembre 2023.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <button id="btnThree" class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Expérience professionnelle <i class="fas fa-caret-down"></i></button>
+            </h2>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <ul>
+                <li>Stage de fin de formation WebForce3
+                  <ul>
+                    <li>Stage de 2 semaines chez un caviste. Il avait déjà un site en ligne et ai travaillé dessus en local avant de mettre à jour le site en ligne lorsque les modifications demandées convenaient au tuteur de stage.</li>
+                    <li>Travail exclusif sur PrestaShop.</li>
+                    <li>Ajout et modification de pluggins, modification du thème enfant.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>De ces expériences, j'ai pu établire en correlation avec mes compétences des préferences pour tel ou tel domaine. Ainsi, le développement de fonctionnalités avancées reste ce que je préfere et ce pour quoi je suis le plus à l'aise et compétent. Sans pour autant négliger l'aspect visuel du front-end, je souhaite me perfectionner et me spécialiser dans l'utilisation de Symfony et dans le déceloppement back-end.</p>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      $(document).ready(function(){
+        $('#btnOne').click(function(){
+          if ($('#collapseOne').hasClass('show')){
+            $('#btnOne>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+          } else {
+            $('#btnOne>i').removeClass('fa-caret-down').addClass('fa-caret-up');
+            $('#btnTwo>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+            $('#btnThree>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+          }
+        });
+
+        $('#btnTwo').click(function(){
+          if ($('#collapseTwo').hasClass('show')){
+            $('#btnTwo>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+          } else {
+            $('#btnTwo>i').removeClass('fa-caret-down').addClass('fa-caret-up');
+            $('#btnOne>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+            $('#btnThree>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+          }
+        });
+
+        $('#btnThree').click(function(){
+          if ($('#collapseThree').hasClass('show')){
+            $('#btnThree>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+          } else {
+            $('#btnThree>i').removeClass('fa-caret-down').addClass('fa-caret-up');
+            $('#btnOne>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+            $('#btnTwo>i').removeClass('fa-caret-up').addClass('fa-caret-down');
+          }
+        });
+      });
+    </script>
 {% endblock %}
