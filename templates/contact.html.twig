@@ -9,6 +9,7 @@
         {% if delay is defined %}
         <p class="alert alert-warning col-lg-11 offset-lg-1">Vous ne pouvez envoyer un message que toutes les 6 heures. Temps restant : <span id="timer-display"></span></p>
         {% endif %}
+        <div id="success-text"></div>
         <form action="{{ path('apiMessage') }}" method="POST" class="col-lg-11 offset-lg-1">
             <div class="form-group col-lg-6">
                 <label for="email">Votre adresse mail de contacte :</label>
@@ -88,7 +89,7 @@
                         console.log(data);
                         if (data.success){
                             form.remove();
-                            $('<p class="alert alert-success">Votre message a été envoyé avec succes.<p>').insertAfter($('p'));
+                            $('#success-text').html('<p class="alert alert-success">Votre message a été envoyé avec succes.<p>');
                         } else {
                             if (typeof data.email !== 'undefined' && data.email){
                                 $('#email').css('border', '2px solid red');
